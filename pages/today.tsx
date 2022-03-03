@@ -1,5 +1,7 @@
-import React from "react";
+import styled from "styled-components";
+
+import HeaderBar from "../components/headerBar";
 
 export default function Today() {
-  return <h1>Today</h1>;
+  return <HeaderBar title="TODAY" />;
 }

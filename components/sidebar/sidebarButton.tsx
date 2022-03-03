@@ -23,7 +23,7 @@ const SidebarButtonContainer = styled.div`
 `;
 
 const Label = styled.a`
-  font-weight: bold;
+  font-weight: 600;
 
   * {
     width: 2px;
