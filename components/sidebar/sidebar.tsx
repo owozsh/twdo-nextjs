@@ -3,18 +3,6 @@ import styled from "styled-components";
 
 import SidebarButton from "./sidebarButton";
 
-const SidebarContainer = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding-right: 1rem;
-  flex: 1;
-
-  padding-top: 11.5rem;
-  margin-right: 1rem;
-`;
-
 export default function Sidebar() {
   return (
     <SidebarContainer>
@@ -29,9 +17,9 @@ export default function Sidebar() {
           </li>
           <li>
             <SidebarButton
-              label="up-next"
+              label="upcoming"
               icon={<Calendar />}
-              route="up-next"
+              route="upcoming"
             ></SidebarButton>
           </li>
           <li>
@@ -46,3 +34,14 @@ export default function Sidebar() {
     </SidebarContainer>
   );
 }
+
+const SidebarContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 1;
+
+  margin-top: 24rem;
+  margin-right: 2rem;
+`;

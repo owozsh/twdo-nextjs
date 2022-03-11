@@ -1,7 +1,26 @@
-import router from "next/router";
+import Link from "next/link";
 import { ReactElement } from "react";
 
 import styled from "styled-components";
+
+export default function SidebarButton({
+  label,
+  icon,
+  route,
+}: {
+  label: string;
+  icon: ReactElement | string;
+  route: string;
+}) {
+  return (
+    <Link href={route} passHref>
+      <SidebarButtonContainer>
+        <Icon>{icon}</Icon>
+        <Label>{label}</Label>
+      </SidebarButtonContainer>
+    </Link>
+  );
+}
 
 const SidebarButtonContainer = styled.div`
   width: 10rem;
@@ -12,17 +31,23 @@ const SidebarButtonContainer = styled.div`
   padding: 0.2rem 0.5rem;
   box-sizing: border-box;
 
-  cursor: pointer;
+  cursor: default;
+  outline: 0px solid #eee;
 
-  transition-timing-function: cubic-bezier();
-  transition-duration: 0.2s;
+  transition: background-color 0.1s ease-in-out, transform 0.05s ease-in-out,
+    outline 0.1s ease-in-out;
 
   &:hover {
-    background-color: #ddd;
+    background-color: #eee;
+    outline: 1px solid #ccc;
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `;
 
-const Label = styled.a`
+const Label = styled.p`
   font-weight: 600;
 
   * {
@@ -39,24 +64,3 @@ const Icon = styled.span`
     width: 1rem;
   }
 `;
-
-export default function SidebarButton({
-  label,
-  icon,
-  route,
-}: {
-  label: string;
-  icon: ReactElement | string;
-  route: string;
-}) {
-  const navigate = () => {
-    router.push(route);
-  };
-
-  return (
-    <SidebarButtonContainer onClick={navigate}>
-      <Icon>{icon}</Icon>
-      <Label>{label}</Label>
-    </SidebarButtonContainer>
-  );
-}

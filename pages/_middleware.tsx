@@ -3,7 +3,7 @@ export async function middleware(req: any, ev: any) {
   const url = req.nextUrl.clone();
 
   if (url.pathname == "/") {
-    url.pathname = "today";
+    url.pathname = "sign-up";
     return NextResponse.redirect(url);
   }
 
