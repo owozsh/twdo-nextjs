@@ -8,7 +8,7 @@ export default function Project() {
 
   return (
     <>
-      <HeaderBar title={projectName} />
+      <HeaderBar title={projectName.toUpperCase()} />
       <Task description="task 1" />
       <Task description="task 2" />
       <Task description="task 3" />

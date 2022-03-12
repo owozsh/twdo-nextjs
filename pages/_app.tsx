@@ -2,7 +2,7 @@ import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import Layout from "../components/layout";
 
-let isLoggedIn = true;
+let isLoggedIn = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
   let appView = (
@@ -11,11 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     </Layout>
   );
 
-  let authView = (
-    <div>
-      <Component {...pageProps} />
-    </div>
-  );
+  let authView = <Component {...pageProps} />;
 
   return isLoggedIn ? appView : authView;
 }
