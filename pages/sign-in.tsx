@@ -6,14 +6,17 @@ export default function SignIn() {
     <AuthLayout>
       <SignUpContainer>
         <Title>login</Title>
-        <TextInput placeholder="Email address"></TextInput>
-        <TextInput placeholder="Password" type="password"></TextInput>
+
+        <TextInput placeholder="email address"></TextInput>
+        <TextInput placeholder="password" type="password"></TextInput>
+
         <Button>login</Button>
+
         <Subtext>
-          <Link href="sign-in">Forget your password?</Link>
+          <Link href="sign-in">forget your password?</Link>
         </Subtext>
         <Subtext>
-          No account? <Link href="sign-up">Create one</Link>
+          no account? <Link href="sign-up">create one</Link>
         </Subtext>
       </SignUpContainer>
     </AuthLayout>

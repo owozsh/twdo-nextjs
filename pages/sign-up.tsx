@@ -5,17 +5,17 @@ export default function SignUp() {
   return (
     <AuthLayout>
       <SignUpContainer>
-        <Title>Create Your Account</Title>
-        <TextInput placeholder="Name"></TextInput>
-        <TextInput placeholder="Email address"></TextInput>
-        <TextInput placeholder="Password" type="password"></TextInput>
+        <Title>create your account</Title>
+        <TextInput placeholder="name"></TextInput>
+        <TextInput placeholder="email address"></TextInput>
+        <TextInput placeholder="password" type="password"></TextInput>
         <TextInput
-          placeholder="Confirm your password"
+          placeholder="confirm your password"
           type="password"
         ></TextInput>
-        <Button>register</Button>
+        <Button>sign up</Button>
         <Subtext>
-          Already have an account? <Link href="sign-in">Sign In</Link>
+          already have an account? <Link href="sign-in">sign in</Link>
         </Subtext>
       </SignUpContainer>
     </AuthLayout>
@@ -75,6 +75,8 @@ const Button = styled.button`
   border-radius: 5px;
   border: none;
   color: #fff;
+
+  cursor: pointer;
 
   height: 1rem;
   width: 100%;
