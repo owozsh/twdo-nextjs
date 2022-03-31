@@ -1,8 +1,12 @@
 import "../styles/globals.scss";
-import type { AppProps } from "next/app";
-import Layout from "../components/layout";
 
-let isLoggedIn = false;
+import type { AppProps } from "next/app";
+import { ThemeProvider } from "styled-components";
+
+import Layout from "../components/Layout";
+import light from "../styles/themes/light";
+
+let isLoggedIn = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
   let appView = (
@@ -13,7 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   let authView = <Component {...pageProps} />;
 
-  return isLoggedIn ? appView : authView;
+  return (
+    <ThemeProvider theme={light}>
+      {isLoggedIn ? appView : authView}
+    </ThemeProvider>
+  );
 }
 
 export default MyApp;

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
-import HeaderBar from "../components/headerBar";
-import Task from "../components/task";
+import HeaderBar from "../components/HeaderBar";
+import Task from "../components/Task";
 
 export default function Project() {
   const projectName = useRouter().query.project as string;
