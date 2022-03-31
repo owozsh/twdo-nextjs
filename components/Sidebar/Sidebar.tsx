@@ -1,7 +1,7 @@
 import { Sun, Calendar, Package } from "react-feather";
 import styled from "styled-components";
 
-import SidebarButton from "./sidebarButton";
+import SidebarButton from "./SidebarButton";
 
 export default function Sidebar() {
   return (

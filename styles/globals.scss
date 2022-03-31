@@ -1,5 +1,3 @@
-@import "variables";
-
 html,
 body {
   padding: 0;
@@ -8,7 +6,7 @@ body {
   font-family: Nunito, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 18px;
-  background-color: $bg;
+  background-color: #fff;
 }
 
 * {
@@ -16,6 +14,7 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
+  font-family: Nunito;
 }
 
 a {

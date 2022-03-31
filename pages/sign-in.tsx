@@ -1,21 +1,22 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <AuthLayout>
       <SignUpContainer>
-        <Title>create your account</Title>
-        <TextInput placeholder="name"></TextInput>
+        <Title>login</Title>
+
         <TextInput placeholder="email address"></TextInput>
         <TextInput placeholder="password" type="password"></TextInput>
-        <TextInput
-          placeholder="confirm your password"
-          type="password"
-        ></TextInput>
-        <Button>sign up</Button>
+
+        <Button>login</Button>
+
         <Subtext>
-          already have an account? <Link href="sign-in">sign in</Link>
+          <Link href="sign-in">forget your password?</Link>
+        </Subtext>
+        <Subtext>
+          no account? <Link href="sign-up">create one</Link>
         </Subtext>
       </SignUpContainer>
     </AuthLayout>

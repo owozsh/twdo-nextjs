@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Sidebar from "./sidebar/sidebar";
-import TaskView from "./taskView";
+import Sidebar from "./Sidebar/Sidebar";
+import TaskView from "./TaskView";
 
 export default function Layout({ children }: { children: JSX.Element }) {
   return (
