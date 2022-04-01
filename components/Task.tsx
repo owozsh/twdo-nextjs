@@ -19,7 +19,7 @@ export default function Task({ description }: { description: string }) {
         isComplete={isComplete}
         onClick={(e) => toggleIsComplete(e)}
       ></Checkbox>
-      <p>{description}</p>
+      <input type="text" name="name" value={description} />
     </TaskContainer>
   );
 }
@@ -33,9 +33,11 @@ const TaskContainer = styled.li`
   align-items: center;
 
   width: 100%;
-  padding: 0.2rem 0.5rem;
   margin-bottom: 0.1rem;
   border-radius: 5px;
+
+  padding: ${(props: { editMode: boolean }) =>
+    props.editMode ? "0.5rem 0.7rem" : "0.2rem 0.5rem"};
 
   user-select: ${(props: { editMode: boolean }) =>
     props.editMode ? "text" : "none"};
@@ -58,8 +60,19 @@ const TaskContainer = styled.li`
     transform: scale(0.98);
   }
 
-  p {
+  input {
+    font-size: 1rem;
     width: 100%;
+    border: none;
+    background-color: transparent;
+
+    cursor: ${(props: { editMode: boolean }) =>
+      props.editMode ? "text" : "default"};
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
   }
 `;
 
