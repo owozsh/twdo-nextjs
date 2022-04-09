@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { MouseEventHandler, useState } from "react";
 
-export default function Task({ description }: { description: string }) {
+export default function Task(props: { description: string }) {
   const [editMode, setEditMode] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-
-  const toggleEditMode = () => setEditMode(!editMode);
+  const [description, setDescription] = useState(props.description);
 
   const toggleIsComplete = (e: any) => {
     e.stopPropagation();
@@ -13,13 +12,22 @@ export default function Task({ description }: { description: string }) {
   };
 
   return (
-    <TaskContainer editMode={editMode} onClick={toggleEditMode}>
+    <TaskContainer editMode={editMode} onClick={() => setEditMode(true)}>
       <Checkbox
         editMode={editMode}
         isComplete={isComplete}
         onClick={(e) => toggleIsComplete(e)}
       ></Checkbox>
-      <input type="text" name="name" value={description} />
+      <input
+        type="text"
+        name="name"
+        onBlur={() => setEditMode(false)}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setEditMode(false);
+        }}
+      />
     </TaskContainer>
   );
 }
@@ -57,7 +65,8 @@ const TaskContainer = styled.li`
   }
 
   &:active {
-    transform: scale(0.98);
+    ${(props: { editMode: boolean }) =>
+      props.editMode ? "" : "transform: scale(0.98);"};
   }
 
   input {

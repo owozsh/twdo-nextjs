@@ -12,21 +12,21 @@ export default function Sidebar() {
             <SidebarButton
               label="today"
               icon={<Sun />}
-              route="today"
+              route="/today"
             ></SidebarButton>
           </li>
           <li>
             <SidebarButton
               label="upcoming"
               icon={<Calendar />}
-              route="upcoming"
+              route="/upcoming"
             ></SidebarButton>
           </li>
           <li>
             <SidebarButton
               label="someday"
               icon={<Package />}
-              route="someday"
+              route="/someday"
             ></SidebarButton>
           </li>
         </ul>
