@@ -1,7 +1,9 @@
-import React, { FC, useEffect } from "react";
 import { AppProps } from "next/app";
-import Layout from "../components/Layout";
+import { createContext } from "react";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
+
+import Layout from "../components/Layout";
+
 import light from "../styles/themes/light";
 
 export default function MyApp({ Component, pageProps }: AppProps) {

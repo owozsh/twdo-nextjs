@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export default function TaskView({ children }: { children?: JSX.Element[] }) {
+export default function TaskView({
+  children,
+}: {
+  children?: JSX.Element[] | JSX.Element;
+}) {
   return <TaskViewContainer>{children}</TaskViewContainer>;
 }
 
