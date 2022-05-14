@@ -1,39 +1,74 @@
 import styled from "styled-components";
-import { MouseEventHandler, useState } from "react";
+import {
+  MouseEventHandler,
+  useState,
+  useRef,
+  MutableRefObject,
+  useEffect,
+} from "react";
 
 export default function Task(props: { description: string }) {
-  const [editMode, setEditMode] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [description, setDescription] = useState(props.description);
+  const [editMode, setEditMode] = useState(false);
+
+  const inputElement = useRef<HTMLInputElement>(null);
+
+  const exitEditMode = () => {
+    setEditMode(false);
+    if (inputElement.current != null) inputElement.current.blur();
+  };
 
   const toggleIsComplete = (e: any) => {
     e.stopPropagation();
     setIsComplete(!isComplete);
   };
 
+  const handleEscKey = () => {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") exitEditMode();
+    });
+  };
+
+  useEffect(handleEscKey, []);
+
   return (
-    <TaskContainer editMode={editMode} onClick={() => setEditMode(true)}>
-      <Checkbox
-        editMode={editMode}
-        isComplete={isComplete}
-        onClick={(e) => toggleIsComplete(e)}
-      ></Checkbox>
-      <input
-        type="text"
-        name="name"
-        onBlur={() => setEditMode(false)}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") setEditMode(false);
-        }}
-      />
-    </TaskContainer>
+    <>
+      <TaskContainer editMode={editMode} onClick={() => setEditMode(true)}>
+        <Checkbox
+          editMode={editMode}
+          isComplete={isComplete}
+          onClick={(e) => toggleIsComplete(e)}
+        ></Checkbox>
+        <input
+          value={description}
+          ref={inputElement}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </TaskContainer>
+      {editMode ? (
+        <EditModeBackgroundBlur onClick={() => exitEditMode()} />
+      ) : (
+        ""
+      )}
+    </>
   );
 }
 
+const EditModeBackgroundBlur = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+`;
+
 const TaskContainer = styled.li`
   display: flex;
+  position: relative;
+
+  ${(props: { editMode: boolean }) => (props.editMode ? "z-index: 5;" : "")};
 
   flex-direction: ${(props: { editMode: boolean }) =>
     props.editMode ? "column" : "row"};
