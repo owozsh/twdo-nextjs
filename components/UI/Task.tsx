@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import {
-  MouseEventHandler,
-  useState,
-  useRef,
-  MutableRefObject,
-  useEffect,
-} from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Task(props: { description: string }) {
   const [isComplete, setIsComplete] = useState(false);

@@ -1,19 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { AppProps } from "next/app";
 import Layout from "../components/Layout";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import light from "../styles/themes/light";
 
-const isLoggedIn = true;
+export default function MyApp({ Component, pageProps }: AppProps) {
+  const isLoggedIn = true;
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  let appView = (
+  const appView = (
     <Layout>
       <Component {...pageProps} />
     </Layout>
   );
 
-  let authView = <Component {...pageProps} />;
+  const authView = <Component {...pageProps} />;
 
   return (
     <ThemeProvider theme={light}>
@@ -21,9 +21,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <GlobalStyle />
     </ThemeProvider>
   );
-};
-
-export default MyApp;
+}
 
 const GlobalStyle = createGlobalStyle`
   html,
