@@ -10,16 +10,6 @@ export default function Task(props: { description: string }) {
 
   const inputElement = useRef<HTMLInputElement>(null);
 
-  const startEditMode = () => {
-    setEditMode(true);
-    if (inputElement.current != null) inputElement.current.focus();
-  };
-
-  const exitEditMode = () => {
-    setEditMode(false);
-    if (inputElement.current != null) inputElement.current.blur();
-  };
-
   const toggleIsComplete = (e: any) => {
     e.stopPropagation();
     setIsComplete(!isComplete);
@@ -27,17 +17,23 @@ export default function Task(props: { description: string }) {
 
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" || e.key === "Enter") exitEditMode();
+      if (e.key === "Escape" || e.key === "Enter") setEditMode(false);
     });
 
     if (description == "") {
-      startEditMode();
+      setEditMode(true);
     }
   }, [description]);
 
+  useEffect(() => {
+    if (inputElement.current != null) {
+      editMode ? inputElement.current.focus() : inputElement.current.blur();
+    }
+  }, [editMode]);
+
   return (
     <>
-      <TaskContainer editMode={editMode} onClick={startEditMode}>
+      <TaskContainer editMode={editMode} onClick={() => setEditMode(true)}>
         <Checkbox
           editMode={editMode}
           isComplete={isComplete}
@@ -46,8 +42,15 @@ export default function Task(props: { description: string }) {
           <Check />
         </Checkbox>
         <input
+          disabled={!editMode}
           value={description}
           ref={inputElement}
+          onFocus={(e) =>
+            e.currentTarget.setSelectionRange(
+              e.currentTarget.value.length,
+              e.currentTarget.value.length
+            )
+          }
           onChange={(e) => setDescription(e.target.value)}
         />
         <ActionMenu editMode={editMode}>
@@ -60,7 +63,7 @@ export default function Task(props: { description: string }) {
         </ActionMenu>
       </TaskContainer>
       {editMode ? (
-        <EditModeBackgroundBlur onClick={() => exitEditMode()} />
+        <EditModeBackgroundBlur onClick={() => setEditMode(false)} />
       ) : (
         ""
       )}
@@ -170,7 +173,7 @@ const Checkbox = styled.div`
       props.isComplete ? "" : "display: hidden"}
     min-width: 1rem;
     stroke-width: 2px;
-    transform: translate(-0.6rem, -0.05rem);
+    transform: translate(-0.55rem, -0.05rem);
   }
 `;
 
