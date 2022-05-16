@@ -1,7 +1,7 @@
 import { Sun, Calendar, Package } from "react-feather";
 import styled from "styled-components";
 
-import SidebarButton from "./SidebarItem";
+import SidebarItem from "./SidebarItem";
 
 export default function Sidebar() {
   return (
@@ -9,25 +9,25 @@ export default function Sidebar() {
       <nav>
         <ul>
           <li>
-            <SidebarButton
+            <SidebarItem
               label="today"
               icon={<Sun />}
               route="/today"
-            ></SidebarButton>
+            ></SidebarItem>
           </li>
           <li>
-            <SidebarButton
+            <SidebarItem
               label="upcoming"
               icon={<Calendar />}
               route="/upcoming"
-            ></SidebarButton>
+            ></SidebarItem>
           </li>
           <li>
-            <SidebarButton
+            <SidebarItem
               label="someday"
               icon={<Package />}
               route="/someday"
-            ></SidebarButton>
+            ></SidebarItem>
           </li>
         </ul>
       </nav>

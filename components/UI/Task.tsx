@@ -1,5 +1,7 @@
-import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
+import { Trash2, Calendar } from "react-feather";
+
+import styled from "styled-components";
 
 export default function Task(props: { description: string }) {
   const [isComplete, setIsComplete] = useState(false);
@@ -7,6 +9,11 @@ export default function Task(props: { description: string }) {
   const [editMode, setEditMode] = useState(false);
 
   const inputElement = useRef<HTMLInputElement>(null);
+
+  const enterEditMode = () => {
+    setEditMode(true);
+    if (inputElement.current != null) inputElement.current.focus();
+  };
 
   const exitEditMode = () => {
     setEditMode(false);
@@ -18,17 +25,19 @@ export default function Task(props: { description: string }) {
     setIsComplete(!isComplete);
   };
 
-  const handleEscKey = () => {
+  useEffect(() => {
     window.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") exitEditMode();
+      if (e.key === "Escape" || e.key === "Enter") exitEditMode();
     });
-  };
 
-  useEffect(handleEscKey, []);
+    if (description == "") {
+      enterEditMode();
+    }
+  }, [description]);
 
   return (
     <>
-      <TaskContainer editMode={editMode} onClick={() => setEditMode(true)}>
+      <TaskContainer editMode={editMode} onClick={enterEditMode}>
         <Checkbox
           editMode={editMode}
           isComplete={isComplete}
@@ -39,6 +48,14 @@ export default function Task(props: { description: string }) {
           ref={inputElement}
           onChange={(e) => setDescription(e.target.value)}
         />
+        <ActionMenu editMode={editMode}>
+          <Button buttonType="default">
+            <Calendar />
+          </Button>
+          <Button buttonType="destructive">
+            <Trash2 />
+          </Button>
+        </ActionMenu>
       </TaskContainer>
       {editMode ? (
         <EditModeBackgroundBlur onClick={() => exitEditMode()} />
@@ -62,12 +79,17 @@ const TaskContainer = styled.li`
   display: flex;
   position: relative;
 
-  ${(props: { editMode: boolean }) => (props.editMode ? "z-index: 5;" : "")};
+  ${(props: { editMode: boolean }) =>
+    props.editMode
+      ? "z-index: 5;\nborder: 1px solid #ddd;\nbox-shadow: 0 5px 10px #eee"
+      : "&:hover {\nbackground-color: #eee;\noutline: 1px solid #ccc;\n}"};
 
   flex-direction: ${(props: { editMode: boolean }) =>
     props.editMode ? "column" : "row"};
 
-  align-items: center;
+  align-items: ${(props: { editMode: boolean }) =>
+    props.editMode ? "stretch" : "center"};
+  justify-content: space-between;
 
   width: 100%;
   margin-bottom: 0.1rem;
@@ -88,11 +110,6 @@ const TaskContainer = styled.li`
   transition: background-color 0.1s ease-in-out, transform 0.05s ease-in-out,
     outline 0.1s ease-in-out, height 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-  &:hover {
-    background-color: #eee;
-    outline: 1px solid #ccc;
-  }
-
   &:active {
     ${(props: { editMode: boolean }) =>
       props.editMode ? "" : "transform: scale(0.98);"};
@@ -112,6 +129,12 @@ const TaskContainer = styled.li`
       border: none;
     }
   }
+`;
+
+const ActionMenu = styled.div`
+  ${(props: { editMode: boolean }) =>
+    props.editMode ? "display: flex;" : "display: none;"}
+  justify-content: flex-end;
 `;
 
 const Checkbox = styled.div`
@@ -139,5 +162,45 @@ const Checkbox = styled.div`
     transform: translate(-0.3rem, -0.3rem);
 
     border: 0.7rem solid transparent;
+  }
+`;
+
+const Button = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: 1.4rem;
+  width: 1.4rem;
+  margin-left: 0.2rem;
+
+  border: none;
+  border-radius: 0.2rem;
+  background-color: transparent;
+
+  outline: transparent;
+
+  transition: background-color 0.2s cubic-bezier(0.165, 0.84, 0.44, 1),
+    outline 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &:hover {
+    background-color: ${(props: { buttonType: string }) =>
+      props.buttonType == "destructive" ? "#ff000015" : "#0000ff15"};
+
+    outline: 1px solid
+      ${(props: { buttonType: string }) =>
+        props.buttonType == "destructive" ? "#ff000050" : "#0000ff50"};
+
+    svg {
+      color: ${(props: { buttonType: string }) =>
+        props.buttonType == "destructive" ? "red" : "blue"};
+    }
+  }
+
+  svg {
+    color: #888;
+    width: 1rem;
+    stroke-width: 1.5px;
+    transition: color 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 `;

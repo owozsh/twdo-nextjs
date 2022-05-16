@@ -1,4 +1,5 @@
-export interface Task {
+export interface task {
+  id: number;
   description: string;
-  isComplete: boolean;
+  completed: boolean;
 }

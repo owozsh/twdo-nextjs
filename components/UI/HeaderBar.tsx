@@ -2,13 +2,19 @@ import styled from "styled-components";
 
 import { Plus } from "react-feather";
 
-export default function HeaderBar({ title }: { title: string }) {
+export default function HeaderBar({
+  title,
+  onAddButtonClick,
+}: {
+  title: string;
+  onAddButtonClick?: () => void;
+}) {
   return (
     <HeaderBarContainer>
       <HeaderTitle>{title}</HeaderTitle>
-      <ActionButton>
+      <AddButton onClick={onAddButtonClick}>
         <Plus />
-      </ActionButton>
+      </AddButton>
     </HeaderBarContainer>
   );
 }
@@ -26,7 +32,7 @@ const HeaderTitle = styled.h1`
   font-weight: 600;
 `;
 
-const ActionButton = styled.button`
+const AddButton = styled.button`
   width: 2rem;
   height: 2rem;
   border: none;
