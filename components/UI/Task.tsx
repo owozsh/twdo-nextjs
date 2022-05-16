@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Trash2, Calendar } from "react-feather";
+import { Trash2, Calendar, Check } from "react-feather";
 
 import styled from "styled-components";
 
@@ -10,7 +10,7 @@ export default function Task(props: { description: string }) {
 
   const inputElement = useRef<HTMLInputElement>(null);
 
-  const enterEditMode = () => {
+  const startEditMode = () => {
     setEditMode(true);
     if (inputElement.current != null) inputElement.current.focus();
   };
@@ -31,18 +31,20 @@ export default function Task(props: { description: string }) {
     });
 
     if (description == "") {
-      enterEditMode();
+      startEditMode();
     }
   }, [description]);
 
   return (
     <>
-      <TaskContainer editMode={editMode} onClick={enterEditMode}>
+      <TaskContainer editMode={editMode} onClick={startEditMode}>
         <Checkbox
           editMode={editMode}
           isComplete={isComplete}
           onClick={(e) => toggleIsComplete(e)}
-        ></Checkbox>
+        >
+          <Check />
+        </Checkbox>
         <input
           value={description}
           ref={inputElement}
@@ -82,7 +84,7 @@ const TaskContainer = styled.li`
   ${(props: { editMode: boolean }) =>
     props.editMode
       ? "z-index: 5;\nborder: 1px solid #ddd;\nbox-shadow: 0 5px 10px #eee"
-      : "&:hover {\nbackground-color: #eee;\noutline: 1px solid #ccc;\n}"};
+      : "&:hover {\nbackground-color: #f5f5f5;\noutline: 1px solid #ddd;\n}"};
 
   flex-direction: ${(props: { editMode: boolean }) =>
     props.editMode ? "column" : "row"};
@@ -102,7 +104,7 @@ const TaskContainer = styled.li`
     props.editMode ? "text" : "none"};
 
   height: ${(props: { editMode: boolean }) =>
-    props.editMode ? "5rem" : "2rem"};
+    props.editMode ? "4rem" : "2rem"};
 
   cursor: default;
   outline: 0px solid #eee;
@@ -141,15 +143,16 @@ const Checkbox = styled.div`
   width: 0.8rem;
   height: 0.8rem;
 
-  ${(props: { isComplete: boolean; editMode: boolean }) =>
-    props.editMode ? "display: none;" : ""}
+  display: ${(props: { isComplete: boolean; editMode: boolean }) =>
+    props.editMode ? "none" : "flex"};
+
+  position: relative;
+  align-items: center;
+  justify-content: center;
 
   border-radius: 5px;
   border: 1px solid #000;
   margin-right: 0.5rem;
-
-  background-color: ${(props: { isComplete: boolean; editMode: boolean }) =>
-    props.isComplete ? "#000;" : "#FFF;"};
 
   transition: transform 0.1s cubic-bezier(0.165, 0.84, 0.44, 1),
     opacity 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -158,10 +161,16 @@ const Checkbox = styled.div`
     content: "";
 
     display: block;
-
     transform: translate(-0.3rem, -0.3rem);
-
     border: 0.7rem solid transparent;
+  }
+
+  svg {
+    ${(props: { isComplete: boolean; editMode: boolean }) =>
+      props.isComplete ? "" : "display: hidden"}
+    min-width: 1rem;
+    stroke-width: 2px;
+    transform: translate(-0.6rem, -0.05rem);
   }
 `;
 
@@ -189,7 +198,7 @@ const Button = styled.button`
 
     outline: 1px solid
       ${(props: { buttonType: string }) =>
-        props.buttonType == "destructive" ? "#ff000050" : "#0000ff50"};
+        props.buttonType == "destructive" ? "#ff000030" : "#0000ff30"};
 
     svg {
       color: ${(props: { buttonType: string }) =>
